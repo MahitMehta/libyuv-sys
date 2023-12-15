@@ -17,8 +17,8 @@ license = "MIT/Apache-2.0"
 [dependencies]
 
 [build-dependencies]
-bindgen = "0.43"
-cc = "1.0"
+bindgen = "0.69.1"
+cc = "1.0.83"
 
 [build-dependencies.cmake]
 version = "0.1"
