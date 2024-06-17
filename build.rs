@@ -38,7 +38,16 @@ fn fetch() -> io::Result<()> {
         .status()?;
 
     if status.success() {
-        Ok(())
+        let status = Command::new("git")
+            .current_dir(&source_dir())
+            .arg("checkout")
+            .arg("a758a15")
+            .status()?;
+        if status.success() {
+            Ok(())
+        } else {
+            Err(io::Error::new(io::ErrorKind::Other, "checkout failed"))
+        }
     } else {
         Err(io::Error::new(io::ErrorKind::Other, "fetch failed"))
     }
