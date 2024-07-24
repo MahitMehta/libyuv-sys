@@ -38,16 +38,18 @@ fn fetch() -> io::Result<()> {
         .status()?;
 
     if status.success() {
-        let status = Command::new("git")
-            .current_dir(&source_dir())
-            .arg("checkout")
-            .arg("a758a15")
-            .status()?;
-        if status.success() {
-            Ok(())
-        } else {
-            Err(io::Error::new(io::ErrorKind::Other, "checkout failed"))
+        if cfg!(target_os = "macos") {
+            let status = Command::new("git")
+                .current_dir(&source_dir())
+                .arg("checkout")
+                .arg("a758a15")
+                .status()?;
+            if status.success() {
+                return Ok(())
+            }
+            return Err(io::Error::new(io::ErrorKind::Other, "checkout failed"))
         }
+        return Ok(())
     } else {
         Err(io::Error::new(io::ErrorKind::Other, "fetch failed"))
     }
